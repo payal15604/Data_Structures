@@ -29,3 +29,41 @@ public:
         return res;
     }
 };
+
+//approach 2 with neater code
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int>map;
+
+        for(int num : nums) //populate the map
+        {
+            map[num]++;
+        }
+
+        vector<vector<int>> bucket(nums.size() + 1);
+
+        for(auto &[num, freq]: map) //fill in the bucket
+        {
+            bucket[freq].emplace_back(num);
+        }
+
+        vector<int> ans;
+
+        for(int i = bucket.size() - 1; i > 0 && k>0; i--)
+        {
+            for(int num : bucket[i])
+            {
+                ans.emplace_back(num);
+                k--;
+
+                if(k == 0) break;
+            }
+
+            
+        }
+
+        return ans;
+    }
+};
